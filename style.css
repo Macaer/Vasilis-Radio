@@ -58,14 +58,9 @@ body {
 
 .now-playing {
   margin-top: 10px;
-  font-style: bold;
-  color: #333;
-  text-align: center;
-  #current-track {
-  display: inline-block;
+  font-size: 1.2em;
   font-weight: bold;
-  font-size: 1.1em;
-  color: #5c4033; /* σκούρο καφέ */
+  text-align: center;
 }
 
 #current-track {
