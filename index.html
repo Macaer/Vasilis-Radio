@@ -6,107 +6,125 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="header">
-    <h1>
-      <img src="logos/macaer_logo.png" alt="MACAER Logo" class="page-icon">
-      MACAER RADIO
-    </h1>
+  <div class="container">
+    <!-- Αριστερή στήλη -->
+    <div class="left-column">
+      <h1>
+        <img src="logos/macaer_logo.png" alt="MACAER Logo" class="page-icon">
+        MACAER RADIO
+      </h1>
+      <div id="current-info" class="current-info">
+        <img id="current-logo" src="" alt="" class="current-logo" style="display:none;">
+        <h2 id="current-name" style="display:none;"></h2>
+        <p class="now-playing" id="current-now-playing" style="display:none;">
+          Τώρα παίζει: <span id="current-track">—</span>
+        </p>
+        <img id="cover-art" src="" alt="Cover Art" class="cover-art" style="display:none;">
+      </div>
+    </div>
 
-    <div id="current-station" class="current-station">
-      <img id="current-logo" src="" alt="" class="current-logo" style="display:none;">
-      <h2 id="current-name" style="display:none;"></h2>
-      <p class="now-playing" id="current-now-playing" style="display:none;">
-        Τώρα παίζει: <span id="current-track">—</span>
-      </p>
+    <!-- Μεσαία στήλη -->
+    <div class="middle-column">
+      <h3>Κατηγορίες</h3>
+      <ul id="category-list">
+        <li data-category="FM Stations">FM Stations</li>
+        <li data-category="ERT Echo">ERT Echo</li>
+        <li data-category="House Music">House Music</li>
+        <li data-category="Internet Radio">Internet Radio</li>
+      </ul>
+    </div>
+
+    <!-- Δεξιά στήλη -->
+    <div class="right-column">
+      <h3>Επιλογή Σταθμού</h3>
+      <select id="station-select">
+        <option value="">— Επιλέξτε σταθμό —</option>
+      </select>
     </div>
   </div>
 
-  <div id="stations"></div>
-
   <script src="stations.js"></script>
   <script>
-    window.onload = function () {
-      const container = document.getElementById('stations');
-      let currentAudio = null;
-      let currentPlayingDiv = null;
-      let metadataInterval = null;
+    const stationSelect = document.getElementById("station-select");
+    const categoryList = document.getElementById("category-list");
 
-      stations.forEach(station => {
-        const div = document.createElement('div');
-        div.className = 'station';
+    let currentAudio = null;
+    let metadataInterval = null;
 
-        const title = document.createElement('h2');
-        title.className = 'station-title';
-        title.textContent = station.name;
+    categoryList.addEventListener("click", (e) => {
+      if (e.target.tagName === "LI") {
+        const category = e.target.dataset.category;
+        stationSelect.innerHTML = '<option value="">— Επιλέξτε σταθμό —</option>';
+        stations
+          .filter(s => s.category === category)
+          .forEach((station, index) => {
+            const option = document.createElement("option");
+            option.value = index;
+            option.textContent = station.name;
+            stationSelect.appendChild(option);
+          });
+      }
+    });
 
-        const logo = document.createElement('img');
-        logo.src = station.logo;
-        logo.alt = station.name;
-        logo.className = 'logo';
+    stationSelect.addEventListener("change", () => {
+      const index = stationSelect.value;
+      if (index === "") return;
+      const station = stations[index];
 
-        const desc = document.createElement('p');
-        desc.textContent = station.description;
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+      }
+      if (metadataInterval) {
+        clearInterval(metadataInterval);
+        metadataInterval = null;
+      }
 
-        div.appendChild(title);
-        div.appendChild(logo);
-        div.appendChild(desc);
+      currentAudio = new Audio(station.stream);
+      currentAudio.play();
 
-        div.addEventListener('click', () => {
-          if (currentAudio) {
-            currentAudio.pause();
-            currentAudio.currentTime = 0;
-          }
-          if (currentPlayingDiv) {
-            currentPlayingDiv.classList.remove('playing');
-            const prevTitle = currentPlayingDiv.querySelector('.station-title');
-            prevTitle.textContent = prevTitle.textContent.replace(" 🔊", "");
-          }
-          if (metadataInterval) {
-            clearInterval(metadataInterval);
-            metadataInterval = null;
-          }
+      document.getElementById("current-logo").src = station.logo;
+      document.getElementById("current-logo").alt = station.name;
+      document.getElementById("current-logo").style.display = "inline";
 
-          currentAudio = new Audio(station.stream);
-          currentAudio.play();
+      document.getElementById("current-name").textContent = station.name;
+      document.getElementById("current-name").style.display = "block";
 
-          div.classList.add('playing');
-          title.textContent = station.name + " 🔊";
-          currentPlayingDiv = div;
+      document.getElementById("current-now-playing").style.display = "block";
+      document.getElementById("current-track").textContent = "—";
+      document.getElementById("cover-art").style.display = "none";
 
-          // Ενημέρωση header
-          document.getElementById("current-logo").src = station.logo;
-          document.getElementById("current-logo").alt = station.name;
-          document.getElementById("current-logo").style.display = "inline";
+      if (station.metadataUrl) {
+        const updateMetadata = () => {
+          fetch(station.metadataUrl)
+            .then(res => res.json())
+            .then(data => {
+              const source = Array.isArray(data.icestats.source)
+                ? data.icestats.source[0]
+                : data.icestats.source;
+              const meta = source?.title || source?.artist || source?.streamtitle || "—";
+              document.getElementById("current-track").textContent = meta;
 
-          document.getElementById("current-name").textContent = station.name;
-          document.getElementById("current-name").style.display = "block";
-
-          document.getElementById("current-now-playing").style.display = "block";
-          document.getElementById("current-track").textContent = "—";
-
-          if (station.metadataUrl) {
-            const updateMetadata = () => {
-              fetch(station.metadataUrl)
+              // Αναζήτηση εξωφύλλου από iTunes
+              fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(meta)}&entity=song&limit=1`)
                 .then(res => res.json())
-                .then(data => {
-                  const source = Array.isArray(data.icestats.source)
-                    ? data.icestats.source[0]
-                    : data.icestats.source;
-                  const meta = source?.title || source?.artist || source?.streamtitle || "—";
-                  document.getElementById("current-track").textContent = meta;
-                })
-                .catch(() => {
-                  document.getElementById("current-track").textContent = "—";
+                .then(result => {
+                  const artwork = result.results?.[0]?.artworkUrl100?.replace("100x100", "300x300");
+                  if (artwork) {
+                    const cover = document.getElementById("cover-art");
+                    cover.src = artwork;
+                    cover.style.display = "block";
+                  }
                 });
-            };
-            updateMetadata();
-            metadataInterval = setInterval(updateMetadata, 15000);
-          }
-        });
-
-        container.appendChild(div);
-      });
-    };
+            })
+            .catch(() => {
+              document.getElementById("current-track").textContent = "—";
+            });
+        };
+        updateMetadata();
+        metadataInterval = setInterval(updateMetadata, 15000);
+      }
+    });
   </script>
 </body>
 </html>

@@ -1,17 +1,28 @@
 body {
   font-family: sans-serif;
   background: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+
+/* Αριστερή στήλη */
+.left-column {
+  flex: 1;
+  background: #ffffff;
   padding: 20px;
-}
-
-.header {
   text-align: center;
-  margin-bottom: 30px;
+  border-right: 1px solid #ccc;
 }
 
-.header h1 {
-  display: inline-block;
+.left-column h1 {
   font-size: 2em;
+  margin-bottom: 20px;
 }
 
 .page-icon {
@@ -21,46 +32,63 @@ body {
   margin-right: 10px;
 }
 
-.current-station {
-  text-align: center;
-  margin-top: 20px;
-}
-
 .current-logo {
   width: 80px;
   height: auto;
   margin-bottom: 10px;
 }
 
-#current-name {
-  font-size: 1.5em;
-  margin: 5px 0;
+.cover-art {
+  width: 300px;
+  height: auto;
+  margin-top: 10px;
+  border-radius: 10px;
 }
 
-#current-now-playing {
-  font-style: italic;
-  color: #333;
+/* Μεσαία στήλη */
+.middle-column {
+  flex: 1;
+  background: #f9f9f9;
+  padding: 20px;
+  border-right: 1px solid #ccc;
 }
 
-.station {
-  cursor: pointer;
-  border: 1px solid #ccc;
+.middle-column h3 {
+  margin-bottom: 10px;
+}
+
+#category-list {
+  list-style: none;
+  padding: 0;
+}
+
+#category-list li {
   padding: 10px;
-  margin: 10px;
-  background: white;
+  margin-bottom: 5px;
+  background: #e0e0e0;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
   transition: background 0.3s;
 }
 
-.station:hover {
-  background: #f0f0f0;
+#category-list li:hover {
+  background: #d0d0d0;
 }
 
-.station.playing {
-  background-color: #ccffcc;
-  border-left: 15px solid darkgreen;
+/* Δεξιά στήλη */
+.right-column {
+  flex: 1;
+  background: #ffffff;
+  padding: 20px;
 }
 
-.logo {
-  width: 100px;
-  height: auto;
+.right-column h3 {
+  margin-bottom: 10px;
+}
+
+#station-select {
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
 }
