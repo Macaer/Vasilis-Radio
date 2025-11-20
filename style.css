@@ -18,6 +18,12 @@ body {
   background-color: limegreen;
   border-left: 10px solid darkgreen;
 }
+.page-icon {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
 
 .logo {
   width: 100px;
