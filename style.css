@@ -88,7 +88,7 @@ body {
 }
 
 #category-list li:hover {
-  background: #d6f5d6; /* απαλό πράσινο */
+  background: #99e699; /* απαλό πράσινο */
 }
 
 #category-list li.selected {
