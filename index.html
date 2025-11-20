@@ -81,7 +81,7 @@
                   const source = Array.isArray(data.icestats.source)
                     ? data.icestats.source[0]
                     : data.icestats.source;
-                  const meta = source?.title || source?.artist || source?."streamtitle" || "—";
+                  const meta = source?.title || source?.artist || source?.streamtitle || "—";
                   nowPlayingSpan.textContent = meta;
                 })
                 .catch(() => {
