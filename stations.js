@@ -21,7 +21,7 @@ const stations = [
     stream: "https://n04.radiojar.com/9ndpdg3c0s8uv?rj-ttl=5&rj-tok=AAABePParkkAqPgEpo_caHhURw",
     logo: "logos/up_radio.jpg",
     description: "House Music",
-    metadataUrl: "",
+    metadataUrl: "https://n04.radiojar.com/9ndpdg3c0s8uv?rj-ttl=5&rj-tok=AAABePParkkAqPgEpo_caHhURw/status-json.xsl",
     category: "House Music"
   },
   {
@@ -29,7 +29,7 @@ const stations = [
     stream: "https://imagine2.radioca.st/",
     logo: "logos/fly_104.png",
     description: "House Music",
-    metadataUrl: "",
+    metadataUrl: "https://imagine2.radioca.st/status-json.xsl",
     category: "House Music"
   },
   {
@@ -37,7 +37,7 @@ const stations = [
     stream: "https://stream.vanillaradio.com:8016/stream/stream",
     logo: "logos/vanilla_deep_flavors.png",
     description: "House Music",
-    metadataUrl: "",
+    metadataUrl: "https://stream.vanillaradio.com:8016/stream/stream/status-json.xsl",
     category: "House Music"
   }
 ];
