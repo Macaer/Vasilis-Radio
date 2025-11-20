@@ -8,15 +8,11 @@
 <body>
   <div class="container">
     <!-- Αριστερή στήλη -->
-<div class="left-column">
-  <div class="branding">
-    <img src="logos/macaer_logo.png" alt="MACAER Logo" class="branding-logo">
-    <span class="branding-text">MACAER RADIO</span>
-  </div>
-  <div id="current-info" class="current-info">
-    ...
-  </div>
-</div>
+    <div class="left-column">
+      <div class="branding">
+        <img src="logos/macaer_logo.png" alt="MACAER Logo" class="branding-logo">
+        <span class="branding-text">MACAER RADIO</span>
+      </div>
       <div id="current-info" class="current-info">
         <img id="current-logo" src="" alt="" class="current-logo" style="display:none;">
         <h2 id="current-name" style="display:none;"></h2>
@@ -64,12 +60,12 @@
           .forEach((station, index) => {
             const card = document.createElement("div");
             card.className = "station-card";
-           card.innerHTML = `
-  <div class="station-row">
-    <img src="${station.logo}" alt="${station.name}" class="station-logo-small">
-    <span class="station-name">${station.name}</span>
-  </div>
-`;
+            card.innerHTML = `
+              <div class="station-row">
+                <img src="${station.logo}" alt="${station.name}" class="station-logo-small">
+                <span class="station-name">${station.name}</span>
+              </div>
+            `;
             card.addEventListener("click", () => {
               if (currentAudio) {
                 currentAudio.pause();
