@@ -35,95 +35,92 @@
 
     <!-- Δεξιά στήλη -->
     <div class="right-column">
-      <select id="station-select">
-        <option value="">— Επιλέξτε σταθμό —</option>
-      </select>
+      <div id="station-list"></div>
     </div>
   </div>
 
   <script src="stations.js"></script>
   <script>
-    const stationSelect = document.getElementById("station-select");
     const categoryList = document.getElementById("category-list");
+    const stationList = document.getElementById("station-list");
 
     let currentAudio = null;
     let metadataInterval = null;
 
     categoryList.addEventListener("click", (e) => {
-// Αφαίρεση προηγούμενης επιλογής
-document.querySelectorAll("#category-list li").forEach(li => li.classList.remove("selected"));
-// Επιλογή νέας
-e.target.classList.add("selected");     
-	 if (e.target.tagName === "LI") {
+      if (e.target.tagName === "LI") {
+        document.querySelectorAll("#category-list li").forEach(li => li.classList.remove("selected"));
+        e.target.classList.add("selected");
+
         const category = e.target.dataset.category;
-        stationSelect.innerHTML = '<option value="">— Επιλέξτε σταθμό —</option>';
+        stationList.innerHTML = "";
+
         stations
           .filter(s => s.category === category)
           .forEach((station, index) => {
-            const option = document.createElement("option");
-            option.value = index;
-            option.textContent = station.name;
-            stationSelect.appendChild(option);
-          });
-      }
-    });
+            const card = document.createElement("div");
+            card.className = "station-card";
+            card.innerHTML = `
+              <img src="${station.logo}" alt="${station.name}" class="station-logo">
+              <h4>${station.name}</h4>
+              <p>${station.description}</p>
+            `;
+            card.addEventListener("click", () => {
+              if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+              }
+              if (metadataInterval) {
+                clearInterval(metadataInterval);
+                metadataInterval = null;
+              }
 
-    stationSelect.addEventListener("change", () => {
-      const index = stationSelect.value;
-      if (index === "") return;
-      const station = stations[index];
+              currentAudio = new Audio(station.stream);
+              currentAudio.play();
 
-      if (currentAudio) {
-        currentAudio.pause();
-        currentAudio.currentTime = 0;
-      }
-      if (metadataInterval) {
-        clearInterval(metadataInterval);
-        metadataInterval = null;
-      }
+              document.getElementById("current-logo").src = station.logo;
+              document.getElementById("current-logo").alt = station.name;
+              document.getElementById("current-logo").style.display = "inline";
 
-      currentAudio = new Audio(station.stream);
-      currentAudio.play();
+              document.getElementById("current-name").textContent = station.name;
+              document.getElementById("current-name").style.display = "block";
 
-      document.getElementById("current-logo").src = station.logo;
-      document.getElementById("current-logo").alt = station.name;
-      document.getElementById("current-logo").style.display = "inline";
-
-      document.getElementById("current-name").textContent = station.name;
-      document.getElementById("current-name").style.display = "block";
-
-      document.getElementById("current-now-playing").style.display = "block";
-      document.getElementById("current-track").textContent = "—";
-      document.getElementById("cover-art").style.display = "none";
-
-      if (station.metadataUrl) {
-        const updateMetadata = () => {
-          fetch(station.metadataUrl)
-            .then(res => res.json())
-            .then(data => {
-              const source = Array.isArray(data.icestats.source)
-                ? data.icestats.source[0]
-                : data.icestats.source;
-              const meta = source?.title || source?.artist || source?.streamtitle || "—";
-              document.getElementById("current-track").textContent = meta;
-
-              fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(meta)}&entity=song&limit=1`)
-                .then(res => res.json())
-                .then(result => {
-                  const artwork = result.results?.[0]?.artworkUrl100?.replace("100x100", "300x300");
-                  if (artwork) {
-                    const cover = document.getElementById("cover-art");
-                    cover.src = artwork;
-                    cover.style.display = "block";
-                  }
-                });
-            })
-            .catch(() => {
+              document.getElementById("current-now-playing").style.display = "block";
               document.getElementById("current-track").textContent = "—";
+              document.getElementById("cover-art").style.display = "none";
+
+              if (station.metadataUrl) {
+                const updateMetadata = () => {
+                  fetch(station.metadataUrl)
+                    .then(res => res.json())
+                    .then(data => {
+                      const source = Array.isArray(data.icestats.source)
+                        ? data.icestats.source[0]
+                        : data.icestats.source;
+                      const meta = source?.title || source?.artist || source?.streamtitle || "—";
+                      document.getElementById("current-track").textContent = meta;
+
+                      fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(meta)}&entity=song&limit=1`)
+                        .then(res => res.json())
+                        .then(result => {
+                          const artwork = result.results?.[0]?.artworkUrl100?.replace("100x100", "300x300");
+                          if (artwork) {
+                            const cover = document.getElementById("cover-art");
+                            cover.src = artwork;
+                            cover.style.display = "block";
+                          }
+                        });
+                    })
+                    .catch(() => {
+                      document.getElementById("current-track").textContent = "—";
+                    });
+                };
+                updateMetadata();
+                metadataInterval = setInterval(updateMetadata, 15000);
+              }
             });
-        };
-        updateMetadata();
-        metadataInterval = setInterval(updateMetadata, 15000);
+            stationList.appendChild(card);
+          });
       }
     });
   </script>
