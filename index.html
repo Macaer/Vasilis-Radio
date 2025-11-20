@@ -60,11 +60,12 @@
           .forEach((station, index) => {
             const card = document.createElement("div");
             card.className = "station-card";
-            card.innerHTML = `
-              <img src="${station.logo}" alt="${station.name}" class="station-logo">
-              <h4>${station.name}</h4>
-              <p>${station.description}</p>
-            `;
+           card.innerHTML = `
+  <div class="station-row">
+    <img src="${station.logo}" alt="${station.name}" class="station-logo-small">
+    <span class="station-name">${station.name}</span>
+  </div>
+`;
             card.addEventListener("click", () => {
               if (currentAudio) {
                 currentAudio.pause();
