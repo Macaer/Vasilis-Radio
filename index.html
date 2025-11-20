@@ -11,32 +11,39 @@
 
 <script src="stations.js"></script>
 <script>
-  const container = document.getElementById('stations');
-  let currentAudio = null;
+  window.onload = function () {
+    const container = document.getElementById('stations');
+    let currentAudio = null;
+    let currentPlayingDiv = null;
 
-  stations.forEach(station => {
-    const div = document.createElement('div');
-    div.className = 'station';
-    div.innerHTML = `
-      <img src="${station.logo}" alt="${station.name}" class="logo">
-      <h2>${station.name}</h2>
-      <p>${station.description}</p>
-    `;
+    stations.forEach(station => {
+      const div = document.createElement('div');
+      div.className = 'station';
+      div.innerHTML = `
+        <img src="${station.logo}" alt="${station.name}" class="logo">
+        <h2>${station.name}</h2>
+        <p>${station.description}</p>
+      `;
 
-    div.addEventListener('click', () => {
-      // Αν υπάρχει ήδη ήχος που παίζει, σταμάτα τον
-      if (currentAudio) {
-        currentAudio.pause();
-        currentAudio.currentTime = 0;
-      }
+      div.addEventListener('click', () => {
+        if (currentAudio) {
+          currentAudio.pause();
+          currentAudio.currentTime = 0;
+        }
+        if (currentPlayingDiv) {
+          currentPlayingDiv.classList.remove('playing');
+        }
 
-      // Δημιούργησε νέο audio και παίξε τον
-      currentAudio = new Audio(station.stream);
-      currentAudio.play();
+        currentAudio = new Audio(station.stream);
+        currentAudio.play();
+
+        div.classList.add('playing');
+        currentPlayingDiv = div;
+      });
+
+      container.appendChild(div);
     });
-
-    container.appendChild(div);
-  });
+  };
 </script>
 </body>
 </html>
