@@ -16,7 +16,7 @@ body {
 }
 .station.playing {
   background-color: limegreen;
-  border-left: 10px solid darkgreen;
+  border-left: 5px solid darkgreen;
 }
 .page-icon {
   width: 50px;
