@@ -101,8 +101,23 @@
                       const meta = source?.title || source?.artist || source?.streamtitle || "—";
                       const [artist, track] = meta.split(" - ");
 const trackSpan = document.getElementById("current-track");
-trackSpan.textContent = track || meta;
-trackSpan.setAttribute("data-artist", artist || "");
+
+// Προσπαθούμε να χωρίσουμε σε artist και track
+let artist = "";
+let track = "";
+
+if (meta.includes(" - ")) {
+  [artist, track] = meta.split(" - ");
+} else {
+  track = meta;
+}
+
+// Δημιουργούμε HTML με χρώματα
+trackSpan.innerHTML = `
+  <span style="color:#cc9900; font-weight:bold;">${artist}</span>
+  ${artist ? " – " : ""}
+  <span style="color:#5c4033; font-weight:bold;">${track}</span>
+`;
 
                       fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(meta)}&entity=song&limit=1`)
                         .then(res => res.json())
