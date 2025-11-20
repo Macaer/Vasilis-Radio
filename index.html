@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>MACAER RADIO</title>
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,10 +11,17 @@
       <img src="logos/macaer_logo.png" alt="MACAER Logo" class="page-icon">
       MACAER RADIO
     </h1>
+
+    <div id="current-station" class="current-station">
+      <img id="current-logo" src="" alt="" class="current-logo" style="display:none;">
+      <h2 id="current-name" style="display:none;"></h2>
+      <p class="now-playing" id="current-now-playing" style="display:none;">
+        Τώρα παίζει: <span id="current-track">—</span>
+      </p>
+    </div>
   </div>
 
   <div id="stations"></div>
-
 
   <script src="stations.js"></script>
   <script>
@@ -41,14 +47,9 @@
         const desc = document.createElement('p');
         desc.textContent = station.description;
 
-        const nowPlaying = document.createElement('p');
-        nowPlaying.className = 'now-playing';
-        nowPlaying.innerHTML = 'Τώρα παίζει: <span class="now-playing-text">—</span>';
-
         div.appendChild(title);
         div.appendChild(logo);
         div.appendChild(desc);
-        div.appendChild(nowPlaying);
 
         div.addEventListener('click', () => {
           if (currentAudio) {
@@ -59,8 +60,6 @@
             currentPlayingDiv.classList.remove('playing');
             const prevTitle = currentPlayingDiv.querySelector('.station-title');
             prevTitle.textContent = prevTitle.textContent.replace(" 🔊", "");
-            const prevNow = currentPlayingDiv.querySelector('.now-playing-text');
-            if (prevNow) prevNow.textContent = "—";
           }
           if (metadataInterval) {
             clearInterval(metadataInterval);
@@ -74,7 +73,16 @@
           title.textContent = station.name + " 🔊";
           currentPlayingDiv = div;
 
-          const nowPlayingSpan = div.querySelector('.now-playing-text');
+          // Ενημέρωση header
+          document.getElementById("current-logo").src = station.logo;
+          document.getElementById("current-logo").alt = station.name;
+          document.getElementById("current-logo").style.display = "inline";
+
+          document.getElementById("current-name").textContent = station.name;
+          document.getElementById("current-name").style.display = "block";
+
+          document.getElementById("current-now-playing").style.display = "block";
+          document.getElementById("current-track").textContent = "—";
 
           if (station.metadataUrl) {
             const updateMetadata = () => {
@@ -85,10 +93,10 @@
                     ? data.icestats.source[0]
                     : data.icestats.source;
                   const meta = source?.title || source?.artist || source?.streamtitle || "—";
-                  nowPlayingSpan.textContent = meta;
+                  document.getElementById("current-track").textContent = meta;
                 })
                 .catch(() => {
-                  nowPlayingSpan.textContent = "—";
+                  document.getElementById("current-track").textContent = "—";
                 });
             };
             updateMetadata();

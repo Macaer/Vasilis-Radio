@@ -3,30 +3,7 @@ body {
   background: #f4f4f4;
   padding: 20px;
 }
-.station {
-  cursor: pointer;
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin: 10px;
-  background: white;
-  transition: background 0.3s;
-}
-.station:hover {
-  background: #f0f0f0;
-}
-.station.playing {
-  background-color: #ccffcc;
-  border-left: 15px solid darkgreen;
-}
-.logo {
-  width: 100px;
-  height: auto;
-}
-.now-playing {
-  font-style: italic;
-  color: #333;
-  margin-top: 5px;
-}
+
 .header {
   text-align: center;
   margin-bottom: 30px;
@@ -42,4 +19,48 @@ body {
   height: auto;
   vertical-align: middle;
   margin-right: 10px;
+}
+
+.current-station {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.current-logo {
+  width: 80px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+#current-name {
+  font-size: 1.5em;
+  margin: 5px 0;
+}
+
+#current-now-playing {
+  font-style: italic;
+  color: #333;
+}
+
+.station {
+  cursor: pointer;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px;
+  background: white;
+  transition: background 0.3s;
+}
+
+.station:hover {
+  background: #f0f0f0;
+}
+
+.station.playing {
+  background-color: #ccffcc;
+  border-left: 15px solid darkgreen;
+}
+
+.logo {
+  width: 100px;
+  height: auto;
 }
