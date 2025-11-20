@@ -25,6 +25,7 @@
       stations.forEach(station => {
         const div = document.createElement('div');
         div.className = 'station';
+
         const title = document.createElement('h2');
         title.className = 'station-title';
         title.textContent = station.name;
@@ -70,16 +71,21 @@
           title.textContent = station.name + " 🔊";
           currentPlayingDiv = div;
 
-          if (station.name === "Off Radio") {
+          const nowPlayingSpan = div.querySelector('.now-playing-text');
+
+          if (station.metadataUrl) {
             const updateMetadata = () => {
-              fetch("https://s3.yesstreaming.net:17062/status-json.xsl")
+              fetch(station.metadataUrl)
                 .then(res => res.json())
                 .then(data => {
-                  const meta = data.icestats?.source?.title || "—";
-                  div.querySelector('.now-playing-text').textContent = meta;
+                  const source = Array.isArray(data.icestats.source)
+                    ? data.icestats.source[0]
+                    : data.icestats.source;
+                  const meta = source?.title || source?.artist || source?."streamtitle" || "—";
+                  nowPlayingSpan.textContent = meta;
                 })
                 .catch(() => {
-                  div.querySelector('.now-playing-text').textContent = "—";
+                  nowPlayingSpan.textContent = "—";
                 });
             };
             updateMetadata();
