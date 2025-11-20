@@ -27,6 +27,9 @@ body {
   margin-bottom: 20px;
   color: #333;
 }
+.left-column {
+  position: relative;
+}
 
 .page-icon {
   width: 60px;
@@ -164,7 +167,26 @@ body {
   background-color: #ccc;
   border-radius: 4px;
 }
+.branding {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.7;
+}
 
+.branding-logo {
+  width: 30px;
+  height: auto;
+}
+
+.branding-text {
+  font-size: 0.9em;
+  font-weight: 600;
+  color: #333;
+}
 /* Responsive */
 @media (max-width: 768px) {
   .container {
