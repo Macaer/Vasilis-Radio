@@ -110,10 +110,10 @@
                         track = meta;
                       }
                       trackSpan.innerHTML = `
-                        <span style="color:#cc9900; font-weight:bold;">${artist}</span>
-                        ${artist ? " – " : ""}
-                        <span style="color:#5c4033; font-weight:bold;">${track}</span>
-                      `;
+  <span style="color:#cc9900; font-style:italic; font-size:0.95em;">${artist}</span>
+  ${artist ? " – " : ""}
+  <span style="color:#5c4033; font-style:italic; font-size:0.95em;">${track}</span>
+`;
 
                       fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(meta)}&entity=song&limit=1`)
                         .then(res => res.json())
