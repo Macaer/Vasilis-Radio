@@ -9,41 +9,45 @@
   <h1>📻 Το Internet Radio του Βασίλη</h1>
   <div id="stations"></div>
 
-<script src="stations.js"></script>
-<script>
-  window.onload = function () {
-    const container = document.getElementById('stations');
-    let currentAudio = null;
-    let currentPlayingDiv = null;
+  <script src="stations.js"></script>
+  <script>
+    window.onload = function () {
+      const container = document.getElementById('stations');
+      let currentAudio = null;
+      let currentPlayingDiv = null;
 
-    stations.forEach(station => {
-      const div = document.createElement('div');
-      div.className = 'station';
-      div.innerHTML = `
-        <img src="${station.logo}" alt="${station.name}" class="logo">
-        <h2>${station.name}</h2>
-        <p>${station.description}</p>
-      `;
+      stations.forEach(station => {
+        const div = document.createElement('div');
+        div.className = 'station';
+        div.innerHTML = `
+          <img src="${station.logo}" alt="${station.name}" class="logo">
+          <h2 class="station-title">${station.name}</h2>
+          <p>${station.description}</p>
+        `;
 
-      div.addEventListener('click', () => {
-        if (currentAudio) {
-          currentAudio.pause();
-          currentAudio.currentTime = 0;
-        }
-        if (currentPlayingDiv) {
-          currentPlayingDiv.classList.remove('playing');
-        }
+        div.addEventListener('click', () => {
+          if (currentAudio) {
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+          }
+          if (currentPlayingDiv) {
+            currentPlayingDiv.classList.remove('playing');
+            const prevTitle = currentPlayingDiv.querySelector('.station-title');
+            prevTitle.textContent = prevTitle.textContent.replace(" 🔊", "");
+          }
 
-        currentAudio = new Audio(station.stream);
-        currentAudio.play();
+          currentAudio = new Audio(station.stream);
+          currentAudio.play();
 
-        div.classList.add('playing');
-        currentPlayingDiv = div;
+          div.classList.add('playing');
+          const title = div.querySelector('.station-title');
+          title.textContent += " 🔊";
+          currentPlayingDiv = div;
+        });
+
+        container.appendChild(div);
       });
-
-      container.appendChild(div);
-    });
-  };
-</script>
+    };
+  </script>
 </body>
 </html>

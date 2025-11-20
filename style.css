@@ -1,13 +1,14 @@
 body {
   font-family: sans-serif;
   background: #f4f4f4;
-  padding: 5px;
+  padding: 20px;
 }
 .station {
   cursor: pointer;
   border: 1px solid #ccc;
   padding: 10px;
   margin: 10px;
+  background: white;
   transition: background 0.3s;
 }
 .station:hover {
@@ -16,9 +17,6 @@ body {
 .station.playing {
   background-color: #e0ffe0;
   border-left: 5px solid green;
-}
-.station.playing::before {
-  content: "🔊 ";
 }
 .logo {
   width: 100px;
