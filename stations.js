@@ -12,7 +12,7 @@ const stations = [
     stream: "http://s7.onweb.gr:8410/;stream.nsv&type=mp3",
     logo: "logos/venus_radio.png",
     description: "House Music",
-    metadataUrl: "",
+    metadataUrl: "http://s7.onweb.gr:8410/;stream.nsv&type=mp3/status-json.xsl",
     category: "House Music"
   },
   {
