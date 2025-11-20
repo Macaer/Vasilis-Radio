@@ -63,21 +63,6 @@ body {
   text-align: center;
 }
 
-#current-track {
-  display: inline-block;
-  font-weight: bold;
-  font-size: 1.1em;
-  color: #5c4033; /* σκούρο καφέ */
-}
-
-#current-track::before {
-  content: attr(data-artist) " – ";
-  color: #cc9900; /* κιτρινο-καφέ για artist */
-  font-weight: bold;
-}
-
-
-
 .cover-art {
   width: 180px;
   height: auto;

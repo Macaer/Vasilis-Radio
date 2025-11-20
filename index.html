@@ -57,7 +57,7 @@
 
         stations
           .filter(s => s.category === category)
-          .forEach((station, index) => {
+          .forEach((station) => {
             const card = document.createElement("div");
             card.className = "station-card";
             card.innerHTML = `
@@ -87,7 +87,6 @@
               document.getElementById("current-name").style.display = "block";
 
               document.getElementById("current-now-playing").style.display = "block";
-              document.getElementById("current-track").textContent = "—";
               document.getElementById("cover-art").style.display = "none";
 
               if (station.metadataUrl) {
@@ -99,25 +98,19 @@
                         ? data.icestats.source[0]
                         : data.icestats.source;
                       const meta = source?.title || source?.artist || source?.streamtitle || "—";
-                      const [artist, track] = meta.split(" - ");
-const trackSpan = document.getElementById("current-track");
 
-// Προσπαθούμε να χωρίσουμε σε artist και track
-let artist = "";
-let track = "";
-
-if (meta.includes(" - ")) {
-  [artist, track] = meta.split(" - ");
-} else {
-  track = meta;
-}
-
-// Δημιουργούμε HTML με χρώματα
-trackSpan.innerHTML = `
-  <span style="color:#cc9900; font-weight:bold;">${artist}</span>
-  ${artist ? " – " : ""}
-  <span style="color:#5c4033; font-weight:bold;">${track}</span>
-`;
+                      const trackSpan = document.getElementById("current-track");
+                      let artist = "", track = "";
+                      if (meta.includes(" - ")) {
+                        [artist, track] = meta.split(" - ");
+                      } else {
+                        track = meta;
+                      }
+                      trackSpan.innerHTML = `
+                        <span style="color:#cc9900; font-weight:bold;">${artist}</span>
+                        ${artist ? " – " : ""}
+                        <span style="color:#5c4033; font-weight:bold;">${track}</span>
+                      `;
 
                       fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(meta)}&entity=song&limit=1`)
                         .then(res => res.json())
