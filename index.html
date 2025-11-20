@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <title>MACAER RADIO</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>📻 Το Internet Radio του Βασίλη</h1>
+  <div id="stations"></div>
+
+<script src="stations.js"></script>
+<script>
+  const container = document.getElementById('stations');
+  let currentAudio = null;
+
+  stations.forEach(station => {
+    const div = document.createElement('div');
+    div.className = 'station';
+    div.innerHTML = `
+      <img src="${station.logo}" alt="${station.name}" class="logo">
+      <h2>${station.name}</h2>
+      <p>${station.description}</p>
+    `;
+
+    div.addEventListener('click', () => {
+      // Αν υπάρχει ήδη ήχος που παίζει, σταμάτα τον
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+      }
+
+      // Δημιούργησε νέο audio και παίξε τον
+      currentAudio = new Audio(station.stream);
+      currentAudio.play();
+    });
+
+    container.appendChild(div);
+  });
+</script>
+</body>
+</html>
