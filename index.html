@@ -50,7 +50,11 @@
     let metadataInterval = null;
 
     categoryList.addEventListener("click", (e) => {
-      if (e.target.tagName === "LI") {
+// Αφαίρεση προηγούμενης επιλογής
+document.querySelectorAll("#category-list li").forEach(li => li.classList.remove("selected"));
+// Επιλογή νέας
+e.target.classList.add("selected");     
+	 if (e.target.tagName === "LI") {
         const category = e.target.dataset.category;
         stationSelect.innerHTML = '<option value="">— Επιλέξτε σταθμό —</option>';
         stations

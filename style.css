@@ -84,11 +84,16 @@ body {
   border-radius: 8px;
   text-align: center;
   font-weight: 500;
-  transition: background 0.3s;
+  transition: background 0.3s, color 0.3s;
 }
 
 #category-list li:hover {
-  background: #dcdcdc;
+  background: #d6f5d6; /* απαλό πράσινο */
+}
+
+#category-list li.selected {
+  background: #66cc66; /* έντονο πράσινο */
+  color: white;
 }
 
 /* Δεξιά στήλη */
