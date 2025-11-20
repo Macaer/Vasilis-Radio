@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>MACAER RADIO</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
- <h1>
-  <img src="logos/logo.png" alt="Logo" class="page-icon">
-  MACAER RADIO
-</h1>
-
+  <h1>
+    <img src="logos/macaer_logo.png" alt="MACAER Logo" class="page-icon">
+    MACAER RADIO
+  </h1>
 
   <div id="stations"></div>
 
@@ -20,15 +20,31 @@
       const container = document.getElementById('stations');
       let currentAudio = null;
       let currentPlayingDiv = null;
+      let metadataInterval = null;
 
       stations.forEach(station => {
         const div = document.createElement('div');
         div.className = 'station';
-        div.innerHTML = `
-          <img src="${station.logo}" alt="${station.name}" class="logo">
-          <h2 class="station-title">${station.name}</h2>
-          <p>${station.description}</p>
-        `;
+        const title = document.createElement('h2');
+        title.className = 'station-title';
+        title.textContent = station.name;
+
+        const logo = document.createElement('img');
+        logo.src = station.logo;
+        logo.alt = station.name;
+        logo.className = 'logo';
+
+        const desc = document.createElement('p');
+        desc.textContent = station.description;
+
+        const nowPlaying = document.createElement('p');
+        nowPlaying.className = 'now-playing';
+        nowPlaying.innerHTML = 'Τώρα παίζει: <span class="now-playing-text">—</span>';
+
+        div.appendChild(title);
+        div.appendChild(logo);
+        div.appendChild(desc);
+        div.appendChild(nowPlaying);
 
         div.addEventListener('click', () => {
           if (currentAudio) {
@@ -39,15 +55,36 @@
             currentPlayingDiv.classList.remove('playing');
             const prevTitle = currentPlayingDiv.querySelector('.station-title');
             prevTitle.textContent = prevTitle.textContent.replace(" 🔊", "");
+            const prevNow = currentPlayingDiv.querySelector('.now-playing-text');
+            if (prevNow) prevNow.textContent = "—";
+          }
+          if (metadataInterval) {
+            clearInterval(metadataInterval);
+            metadataInterval = null;
           }
 
           currentAudio = new Audio(station.stream);
           currentAudio.play();
 
           div.classList.add('playing');
-          const title = div.querySelector('.station-title');
-          title.textContent += " 🔊";
+          title.textContent = station.name + " 🔊";
           currentPlayingDiv = div;
+
+          if (station.name === "Off Radio") {
+            const updateMetadata = () => {
+              fetch("https://s3.yesstreaming.net:17062/status-json.xsl")
+                .then(res => res.json())
+                .then(data => {
+                  const meta = data.icestats?.source?.title || "—";
+                  div.querySelector('.now-playing-text').textContent = meta;
+                })
+                .catch(() => {
+                  div.querySelector('.now-playing-text').textContent = "—";
+                });
+            };
+            updateMetadata();
+            metadataInterval = setInterval(updateMetadata, 15000);
+          }
         });
 
         container.appendChild(div);
