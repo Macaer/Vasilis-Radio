@@ -1,4 +1,12 @@
 const stations = [
+{
+    name: "Must Radio",
+    stream: "https://stream.radiomustathens.com/",
+    logo: "logos/must_radio.png",
+    description: "House Music",
+    metadataUrl: "https://stream.radiomustathens.com/status-json.xsl",
+    category: "House Music"
+  },
   {
     name: "Venus Radio",
     stream: "http://s7.onweb.gr:8410/;stream.nsv&type=mp3",
@@ -15,14 +23,7 @@ const stations = [
     metadataUrl: "https://s3.yesstreaming.net:17062/status-json.xsl",
     category: "House Music"
   },
-  {
-    name: "Must Radio",
-    stream: "https://stream.radiomustathens.com/",
-    logo: "logos/must_radio.png",
-    description: "House Music",
-    metadataUrl: "https://stream.radiomustathens.com/status-json.xsl",
-    category: "House Music"
-  },
+  
   {
     name: "Up Radio",
     stream: "https://n04.radiojar.com/9ndpdg3c0s8uv?rj-ttl=5&rj-tok=AAABePParkkAqPgEpo_caHhURw",
