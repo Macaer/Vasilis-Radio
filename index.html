@@ -25,7 +25,6 @@
 
     <!-- Μεσαία στήλη -->
     <div class="middle-column">
-      <h3>Κατηγορίες</h3>
       <ul id="category-list">
         <li data-category="FM Stations">FM Stations</li>
         <li data-category="ERT Echo">ERT Echo</li>
@@ -36,7 +35,6 @@
 
     <!-- Δεξιά στήλη -->
     <div class="right-column">
-      <h3>Επιλογή Σταθμού</h3>
       <select id="station-select">
         <option value="">— Επιλέξτε σταθμό —</option>
       </select>
@@ -105,7 +103,6 @@
               const meta = source?.title || source?.artist || source?.streamtitle || "—";
               document.getElementById("current-track").textContent = meta;
 
-              // Αναζήτηση εξωφύλλου από iTunes
               fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(meta)}&entity=song&limit=1`)
                 .then(res => res.json())
                 .then(result => {
