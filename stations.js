@@ -26,7 +26,7 @@ const stations = [
   },
   {
     name: "Fly 104",
-    stream: "https://imagine2.radioca.st/",
+    stream: "https://imagine2.radioca.st/stream",
     logo: "logos/fly_104.png",
     description: "House Music",
     metadataUrl: "https://imagine2.radioca.st/status-json.xsl",
@@ -37,7 +37,7 @@ const stations = [
     stream: "https://stream.vanillaradio.com:8016/stream/stream",
     logo: "logos/vanilla_deep_flavors.png",
     description: "House Music",
-    metadataUrl: "https://stream.vanillaradio.com:8016/stream/status-json.xsl",
+    metadataUrl: "https://stream.vanillaradio.com:8016/stream/stream/status-json.xsl",
     category: "House Music"
   }
 ];
