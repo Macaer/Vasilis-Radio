@@ -9,12 +9,11 @@
   <div class="container">
     <!-- Αριστερή στήλη -->
     <div class="left-column">
-     
       <div id="current-info" class="current-info">
-	   <div class="branding">
-        <img src="logos/macaer_logo.png" alt="MACAER Logo" class="branding-logo">
-        <span class="branding-text">MACAER RADIO</span>
-      </div>
+        <div id="branding" class="branding" style="display:none;">
+          <img src="logos/macaer_logo.png" alt="MACAER Logo" class="branding-logo">
+          <span class="branding-text">MACAER RADIO</span>
+        </div>
         <img id="current-logo" src="" alt="" class="current-logo" style="display:none;">
         <h2 id="current-name" style="display:none;"></h2>
         <p class="now-playing" id="current-now-playing" style="display:none;">
@@ -80,6 +79,7 @@
               currentAudio = new Audio(station.stream);
               currentAudio.play();
 
+              document.getElementById("branding").style.display = "flex";
               document.getElementById("current-logo").src = station.logo;
               document.getElementById("current-logo").alt = station.name;
               document.getElementById("current-logo").style.display = "inline";
