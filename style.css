@@ -59,7 +59,7 @@ body {
 .now-playing {
   margin-top: 15px;
   font-size: 1em;
-  font-weight: normal;
+  font-weight: 700;
   text-align: center;
   font-style: italic;
 }
