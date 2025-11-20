@@ -14,7 +14,15 @@ body {
   box-sizing: border-box;
 }
 
-/* Branding */
+/* Αριστερή στήλη */
+.left-column {
+  flex: 1;
+  background: transparent;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+}
+
 .current-info {
   display: flex;
   flex-direction: column;
@@ -23,31 +31,11 @@ body {
   margin-top: 20px;
 }
 
-.branding-inline {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 10px;
-  opacity: 0.8;
-}
-
-.branding-logo-inline {
-  width: 40px;
-  height: auto;
-}
-
-.branding-text-inline {
-  font-size: 0.9em;
-  font-weight: 600;
-  color: #333;
-  margin-top: 4px;
-}
 .branding {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 10px;
-  opacity: 0.8;
 }
 
 .branding-logo {
@@ -62,22 +50,6 @@ body {
   margin-top: 4px;
 }
 
-/* Αριστερή στήλη */
-.left-column {
-  flex: 1;
-  background: transparent;
-  padding: 20px;
-  text-align: center;
-  position: relative;
-}
-
-.current-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
 .current-logo {
   width: 70px;
   height: auto;
@@ -86,10 +58,30 @@ body {
 
 .now-playing {
   margin-top: 10px;
-  font-style: italic;
+  font-style: bold;
   color: #333;
   text-align: center;
+  #current-track {
+  display: inline-block;
+  font-weight: bold;
+  font-size: 1.1em;
+  color: #5c4033; /* σκούρο καφέ */
 }
+
+#current-track {
+  display: inline-block;
+  font-weight: bold;
+  font-size: 1.1em;
+  color: #5c4033; /* σκούρο καφέ */
+}
+
+#current-track::before {
+  content: attr(data-artist) " – ";
+  color: #cc9900; /* κιτρινο-καφέ για artist */
+  font-weight: bold;
+}
+
+
 
 .cover-art {
   width: 180px;

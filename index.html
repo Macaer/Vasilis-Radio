@@ -99,7 +99,10 @@
                         ? data.icestats.source[0]
                         : data.icestats.source;
                       const meta = source?.title || source?.artist || source?.streamtitle || "—";
-                      document.getElementById("current-track").textContent = meta;
+                      const [artist, track] = meta.split(" - ");
+const trackSpan = document.getElementById("current-track");
+trackSpan.textContent = track || meta;
+trackSpan.setAttribute("data-artist", artist || "");
 
                       fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(meta)}&entity=song&limit=1`)
                         .then(res => res.json())
