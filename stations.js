@@ -18,7 +18,7 @@ const stations = [
   {
     name: "Up Radio",
     stream: "https://n04.radiojar.com/9ndpdg3c0s8uv?rj-ttl=5&rj-tok=AAABePParkkAqPgEpo_caHhURw",
-    logo: "logos/up_radio.gpg",
+    logo: "logos/up_radio.jpg",
     description: "House Music",
     metadataUrl: "https://n04.radiojar.com/9ndpdg3c0s8uv?rj-ttl=5&rj-tok=AAABePParkkAqPgEpo_caHhURw/status-json.xsl",
     category: "House Music"
