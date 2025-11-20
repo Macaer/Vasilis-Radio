@@ -16,6 +16,14 @@ const stations = [
     category: "House Music"
   },
   {
+    name: "Up Radio",
+    stream: "https://n04.radiojar.com/9ndpdg3c0s8uv?rj-ttl=5&rj-tok=AAABePParkkAqPgEpo_caHhURw",
+    logo: "logos/up_radio.gpg",
+    description: "House Music",
+    metadataUrl: "https://n04.radiojar.com/9ndpdg3c0s8uv?rj-ttl=5&rj-tok=AAABePParkkAqPgEpo_caHhURw/status-json.xsl",
+    category: "House Music"
+  },
+  {
     name: "ERT Proto",
     stream: "https://radiostreaming.ert.gr/ert-proto",
     logo: "logos/ert_proto.png",
