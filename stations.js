@@ -27,7 +27,7 @@ const stations = [
   {
     name: "Fly 104",
     stream: "https://imagine2.radioca.st/",
-    logo: "logos/fly_104.jpg",
+    logo: "logos/fly_104.png",
     description: "House Music",
     metadataUrl: "",
     category: "House Music"
