@@ -8,13 +8,13 @@ const stations = [
     category: "House Music"
   },
   {
-    name: "Venus Radio",
-    stream: "http://s7.onweb.gr:8410/;stream",
-    logo: "logos/venus_radio.png",
-    description: "House Music",
-    metadataUrl: "http://s7.onweb.gr:8410/status-json.xsl",
-    category: "House Music"
-  },
+  name: "Venus Radio",
+  stream: "http://s7.onweb.gr:8410/",
+  logo: "logos/venus_radio.png",
+  description: "House Music",
+  metadataUrl: "http://s7.onweb.gr:8410/status-json.xsl",
+  category: "House Music"
+},
   {
     name: "Off Radio",
     stream: "https://s3.yesstreaming.net:17062/stream",
